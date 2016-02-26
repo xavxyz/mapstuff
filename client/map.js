@@ -1,3 +1,5 @@
+import {PinMe} from './PinMe';
+
 // Basic
 Meteor.startup(function(){
     Mapbox.load({
@@ -23,6 +25,7 @@ Template.Map.rendered = function () {
         if (Mapbox.loaded()) {
             L.mapbox.accessToken = Meteor.settings.public.accessToken;
             var map = L.mapbox.map('map', Meteor.settings.public.mapId);
+            PinMe.pinMe();
         }
     });
 };
