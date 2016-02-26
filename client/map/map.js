@@ -1,11 +1,12 @@
-import {pinMe} from '../modules/actions';
+import * as MapUtils from '../modules/mapUtils.js';
 
 Template.map.onRendered(function () {
-    this.autorun(function () {
+    this.autorun(() => {
         if (Mapbox.loaded()) {
             L.mapbox.accessToken = Meteor.settings.public.accessToken;
             var map = L.mapbox.map('map', Meteor.settings.public.mapId);
-            pinMe();
+            MapUtils.pinMe(map);
+            MapUtils.addClick(map);
         }
     });
 });
