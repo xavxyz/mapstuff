@@ -42,7 +42,7 @@ export default class MapUtils {
   }
 
   removePinsForUser (userId) {
-    if(pinsForUser[userId]) {
+    if(this.pinsForUser[userId]) {
       this.pinsForUser[userId].forEach((pin) => this.map.removeLayer(pin));
       this.pinsForUser[userId] = [];
     }
