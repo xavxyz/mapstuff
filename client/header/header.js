@@ -1,8 +1,14 @@
 import pinType from '../lib/pinType'
 
 Template.header.events({
-  'click [rel=pin-type]' (event, instance) {
-    pinType.set(event.target.innerText);
+  'click [rel=pin-image]' (event, instance) {
+    pinType.set('image');
+  },
+  'click [rel=pin-video]' (event, instance) {
+    pinType.set('video');
+  },
+  'click [rel=pin-text]' (event, instance) {
+    pinType.set('text');
   }
 });
 
