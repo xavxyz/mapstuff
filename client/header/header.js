@@ -9,5 +9,8 @@ Template.header.events({
 Template.header.helpers({
   selected () {
 
+  },
+  pinType (type) {
+    return pinType.get() === type;
   }
 });
