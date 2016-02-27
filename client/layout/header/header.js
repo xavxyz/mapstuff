@@ -16,6 +16,6 @@ Template.header.events({
 
   },
   "submit": function(event, template){
-    console.log("#### HALLO:" + document.getElementById('searchText').value);
+    
   }
 });
