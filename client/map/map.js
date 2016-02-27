@@ -18,7 +18,6 @@ function onMapClick(lng, lat) {
 const onMapLoaded = () => {
   console.log('onMapLoaded');
   Tracker.autorun(() => {
-		mapUtils.addClick(onMapClick);
 		mapUtils.addPinsForUser('JuditsUserId', Pins.find().fetch());
 	});
   /*mapUtils.addPinsForUser('JuditsUserId', [
@@ -29,12 +28,12 @@ const onMapLoaded = () => {
 };
 
 Template.map.onRendered(function () {
-  console.log('Template.onRendered');
 	this.autorun(() => {
     console.log('aurorun');
 		if (Mapbox.loaded()) {
       console.log('Mapbox.loaded');
 			mapUtils = new MapUtils(Meteor.settings.public.accessToken, Meteor.settings.public.mapId, onMapLoaded);
+      mapUtils.addClick(onMapClick);
 		}
 	});
 });
