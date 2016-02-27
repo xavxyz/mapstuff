@@ -1,8 +1,9 @@
 export default class MapUtils {
 
-  constructor(accessToken, mapId, onLoadedCallback) {
+  constructor(accessToken, mapId, onLoadedCallback, onPinClick) {
     L.mapbox.accessToken = accessToken;
     this.pinsForUser = {};
+    this.onPinClick = onPinClick;
     this.map = L.mapbox.map('map', mapId).on('ready', onLoadedCallback);
     L.control.locate().addTo(this.map);
   }
@@ -29,6 +30,13 @@ export default class MapUtils {
       pinLayer = this.addSimplePin(pin.lng, pin.lat);
       break;
     }
+
+    pinLayer.id = pin._id;
+
+    pinLayer.on('click', (e) => {
+        this.onPinClick(e.target.id);
+    });
+
     if(!userId) {
       userId = "default";
     }

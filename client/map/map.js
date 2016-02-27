@@ -26,11 +26,15 @@ const onMapLoaded = () => {
 	});
 };
 
+const onPinClick = (pinId) => {
+  console.log('onPinClick pinId = ' + pinId);
+}
+
 Template.map.onRendered(function () {
 
 	this.autorun(() => {
 		if (Mapbox.loaded()) {
-			mapUtils = new MapUtils(Meteor.settings.public.accessToken, Meteor.settings.public.mapId, onMapLoaded);
+			mapUtils = new MapUtils(Meteor.settings.public.accessToken, Meteor.settings.public.mapId, onMapLoaded, onPinClick);
 			console.log('can add pin');
 			mapUtils.addClick(onMapClick);
 		}
