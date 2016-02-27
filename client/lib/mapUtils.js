@@ -9,7 +9,7 @@ export default class MapUtils {
 
   // add a pin
   //@pin: {type: text/image/video, lng:1, lat:1, title:"", text:"", link:""}
-  addPin (pin) {
+  addPin (pin, userId) {
 
     let pinLayer;
     switch(pin.type) {
@@ -28,6 +28,9 @@ export default class MapUtils {
       default:
       pinLayer = this.addSimplePin(pin.lng, pin.lat);
       break;
+    }
+    if(!userId) {
+      userId = "default";
     }
     if(!this.pinsForUser[userId]) {
       this.pinsForUser[userId] = []
