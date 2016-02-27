@@ -18,7 +18,6 @@ function onMapClick(lng, lat) {
 const onMapLoaded = () => {
   console.log('onMapLoaded');
   Tracker.autorun(() => {
-		mapUtils.addClick(onMapClick);
 		mapUtils.addPinsForUser('JuditsUserId', Pins.find().fetch());
 	});
   /*mapUtils.addPinsForUser('JuditsUserId', [
@@ -33,6 +32,7 @@ Template.map.onRendered(function () {
 	this.autorun(() => {
 		if (Mapbox.loaded()) {
 			mapUtils = new MapUtils(Meteor.settings.public.accessToken, Meteor.settings.public.mapId, onMapLoaded);
+			mapUtils.addClick(onMapClick);
 		}
 	});
 });
