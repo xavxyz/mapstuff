@@ -27,3 +27,5 @@ twbs:bootstrap
 peppelg:bootstrap-3-modal
 accounts-password
 mdg:validated-method
+sach:flow-db-admin
+kadira:flow-router
