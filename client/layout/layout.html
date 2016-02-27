@@ -1,17 +1,9 @@
 <template name="layout">
 	<div id="wrapper">
 		<div class="overlay"></div>
-
-
-
-		<div id="page-content-wrapper">
-			<button type="button" rel="sidebar-action" class="hamburger is-closed" data-toggle="offcanvas">
-				<span class="hamb-top" rel="sidebar-action"></span>
-				<span class="hamb-middle"></span>
-				<span class="hamb-bottom"></span>
-			</button>
-
-		 {{> map}}
-		</div>
+			{{> header}}
+			<div id="page-content-wrapper">
+			 	{{> map}}
+			</div>
 	</div>
 </template>
