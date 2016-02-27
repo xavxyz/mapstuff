@@ -41,29 +41,31 @@ export const addFancyPin = (map, e) => {
       // here you call `bindPopup` with a string of HTML you create - the feature
       // properties declared above are available under `layer.feature.properties`
       var content = '<h2>A ferry ride!<\/h2>' +
-          '<img src="' + layer.feature.properties.image + '" \/>' + 
+          '<img src="' + layer.feature.properties.image + '" \/>' +
           '<p>From: ' + layer.feature.properties.from + '<br \/>' +
           'to: ' + layer.feature.properties.to + '<\/p>';
       layer.bindPopup(content);
   });
 }
 
-export const addClick = (map) => {
+export const addClick = (map, callback) => {
 
 	map.on('click', (e) => {
 
     console.log('e = ', e);
     // map.fitBounds(e.bounds);
     addPin(map, e);
+    callback(e.latlng.lng, e.latlng.lat);
 	});
 }
 
-export const pinMe = (map) => {
+export const pinMe = (map, callback) => {
 
 	map.on('locationfound', (e) => {
 
 		map.fitBounds(e.bounds);
 	  addFancyPin(map, e);
+    callback(e.latlng.lng, e.latlng.lat);
 	});
 
 	if (navigator.geolocation) {
