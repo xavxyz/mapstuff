@@ -6,14 +6,30 @@ let mapUtils;
 
 const onMapClick = (lng, lat) => {
 	if (Meteor.user()) {
-		console.log('onMapClick lat = ' + lat + ' lon = ' + lng);
 		const pin = {
 			lng,
 			lat,
 			type: pinType.get(),
-			title: 'test',
+			title: 'Pinned stuff',
 			userId: Meteor.userId()
 		};
+
+		if ($('[rel=text]').val() === '') {
+			throw new Meteor.Error(400, 'need to fill the fields bro');
+		}
+
+		if (pin.type === 'video' || pin.type === 'image') {
+			if ($('[rel=link]').val() === '') {
+				throw new Meteor.Error(400, 'need to fill the media bro');
+			} else {
+				pin.link = $('[rel=link]').val();
+				pin.text = $('[rel=text]').val();
+			}
+		}
+
+		$('[rel=text]').val('');
+		$('[rel=link]').val('');
+
 		Meteor.call('Pins.methods.insertNewPin', pin);
 	}
 };
