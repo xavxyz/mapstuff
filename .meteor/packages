@@ -29,3 +29,4 @@ accounts-password
 mdg:validated-method
 sach:flow-db-admin
 kadira:flow-router
+kadira:blaze-layout

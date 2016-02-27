@@ -29,6 +29,7 @@ const onMapLoaded = () => {
 };
 
 Template.map.onRendered(function () {
+
 	this.autorun(() => {
 		if (Mapbox.loaded()) {
 			mapUtils = new MapUtils(Meteor.settings.public.accessToken, Meteor.settings.public.mapId, onMapLoaded);
