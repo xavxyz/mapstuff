@@ -11,26 +11,26 @@ export default class MapUtils {
   // add a pin
   //@pin: {type: text/image/video, lng:1, lat:1, title:"", text:"", link:""}
   addPin (pin, userId) {
+		let pinLayer;
 
-    let pinLayer;
     switch(pin.type) {
       case 'text':
-      // TODO should text whether all required properties exist
-      pinLayer = this.addTextPin(pin.lng, pin.lat, pin.title, pin.text);
-      break;
+				// TODO should text whether all required properties exist
+				pinLayer = this.addTextPin(pin.lng, pin.lat, pin.title, pin.text);
+      	break;
       case 'image':
-      // TODO should text whether all required properties exist
-      pinLayer = this.addImagePin(pin.lng, pin.lat, pin.title, pin.link, pin.text);
-      break;
+				// TODO should text whether all required properties exist
+				pinLayer = this.addImagePin(pin.lng, pin.lat, pin.title, pin.link, pin.text);
+				break;
       case 'video':
-      // TODO should text whether all required properties exist
-      pinLayer = this.addVideoPin(pin.lng, pin.lat, pin.title, pin.link, pin.text);
-      break;
+				// TODO should text whether all required properties exist
+				pinLayer = this.addVideoPin(pin.lng, pin.lat, pin.title, pin.link, pin.text);
+				break;
       default:
-      pinLayer = this.addSimplePin(pin.lng, pin.lat);
-      break;
+				pinLayer = this.addSimplePin(pin.lng, pin.lat);
+				break;
     }
-
+    
     pinLayer.id = pin._id;
 
     pinLayer.on('click', (e) => {
@@ -40,9 +40,11 @@ export default class MapUtils {
     if(!userId) {
       userId = "default";
     }
+
     if(!this.pinsForUser[userId]) {
       this.pinsForUser[userId] = [];
     }
+
     this.pinsForUser[userId].push(pinLayer);
   }
 
@@ -61,7 +63,7 @@ export default class MapUtils {
 
   addClick (callback) {
     this.map.on('click', (e) => {
-      // map.fitBounds(e.bounds);
+			// map.fitBounds(e.bounds);
       // this.addPin({lng: e.latlng.lng, lat: e.latlng.lat});
       callback(e.latlng.lng, e.latlng.lat);
     });
