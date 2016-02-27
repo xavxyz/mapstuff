@@ -2,6 +2,7 @@ export default class MapUtils {
 
   constructor(accessToken, mapId, onLoadedCallback) {
     L.mapbox.accessToken = accessToken;
+    this.pinsForUser = [];
     this.map = L.mapbox.map('map', mapId).on('ready', onLoadedCallback);
 
     // this.pinMe(map, onPinMe);
@@ -28,8 +29,13 @@ export default class MapUtils {
   }
 
   addPinsForUser (userId, pins) {
-
+    // this.removePinsForUser ();
     pins.forEach((pin) => this.addPin(pin));
+  }
+
+  removePinsForUser () {
+    this.pinsForUser.forEach((pin) => this.map.removeLayer(pin));
+    // markerLayer.clearLayers();
   }
 
   addClick (callback) {
@@ -38,7 +44,7 @@ export default class MapUtils {
 
       console.log('click this = ', e);
       // map.fitBounds(e.bounds);
-      this.addPin({lng: e.latlng.lng, lat: e.latlng.lat});
+      // this.addPin({lng: e.latlng.lng, lat: e.latlng.lat});
       callback(e.latlng.lng, e.latlng.lat);
   	});
   }
