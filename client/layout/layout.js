@@ -7,7 +7,6 @@ Template.layout.onCreated(function() {
 // jquery stuff goes there: Template.blabla.onRendered(...) <=> $(document).ready(...)
 Template.layout.onRendered(function () {
 	this.sidebarClosed = false;
-	this.trigger = $('.hamburger');
 	this.overlay = $('.overlay');
 });
 
