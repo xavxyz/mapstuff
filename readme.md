@@ -1,1 +1,16 @@
-// To pass settings when app is run remember to use meteor --settings settings.json
+# MapStuff v0.1
+Map awesome stuff with Meteor 1.3 and Mapbox, yeah \o/
+
+To run the project, [you need a Mapbox token](https://www.mapbox.com/).
+
+Once you have one, create a `settings.json` file and add the following :
+```
+{
+  "public": {
+    "accessToken": "YOUR_TOKEN",
+    "mapId": "YOUR_MAP"
+  }
+}
+```
+
+Open issues, PR welcomed, cheers!
