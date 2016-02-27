@@ -33,20 +33,19 @@ export default class MapUtils {
       userId = "default";
     }
     if(!this.pinsForUser[userId]) {
-      this.pinsForUser[userId] = []
+      this.pinsForUser[userId] = [];
     }
     this.pinsForUser[userId].push(pinLayer);
   }
 
   addPinsForUser (userId, pins) {
-    console.log('addPinsForUser');
     this.removePinsForUser(userId);
-    pins.forEach((pin) => this.addPin(pin));
+    pins.forEach((pin) => this.addPin(pin, userId));
   }
 
   removePinsForUser (userId) {
     if(this.pinsForUser[userId]) {
-      this.pinsForUser[userId].forEach((pin) => this.map.removeLayer(pin));
+      this.pinsForUser[userId].forEach((pin) => {console.log('removing pin'); this.map.removeLayer(pin)});
       this.pinsForUser[userId] = [];
     }
     // markerLayer.clearLayers();
@@ -54,7 +53,6 @@ export default class MapUtils {
 
   addClick (callback) {
     this.map.on('click', (e) => {
-      console.log('click this = ', e);
       // map.fitBounds(e.bounds);
       // this.addPin({lng: e.latlng.lng, lat: e.latlng.lat});
       callback(e.latlng.lng, e.latlng.lat);
@@ -76,7 +74,6 @@ export default class MapUtils {
   }
 
   addSimplePin (lng, lat) {
-    console.log('addSimplePin');
     var simplePinLayer = L.mapbox.featureLayer().addTo(this.map);
 
     simplePinLayer.setGeoJSON({
@@ -95,7 +92,6 @@ export default class MapUtils {
 
   // add a pin that contains text only
   addTextPin (lng, lat, title, text) {
-    console.log('addTextPin');
     var textPinLayer = L.mapbox.featureLayer().addTo(this.map);
 
     textPinLayer.setGeoJSON({
@@ -123,7 +119,6 @@ export default class MapUtils {
 
   // add a pin that contains an image and optionally text
   addImagePin (lng, lat, title, image, text) {
-    console.log('addImagePin');
     var imagePinLayer = L.mapbox.featureLayer().addTo(this.map);
 
     imagePinLayer.setGeoJSON({
