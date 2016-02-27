@@ -7,7 +7,7 @@ export default class MapUtils {
   }
 
   // add a pin
-  //@pin: {type: text/image/video, lng:1, lon:1, title:"", text:"", link:""}
+  //@pin: {type: text/image/video, lng:1, lat:1, title:"", text:"", link:""}
   addPin (pin) {
 
     let pinLayer;
