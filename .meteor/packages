@@ -30,3 +30,4 @@ mdg:validated-method
 sach:flow-db-admin
 kadira:flow-router
 kadira:blaze-layout
+reactive-var
