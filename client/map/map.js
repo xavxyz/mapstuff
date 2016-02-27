@@ -29,12 +29,11 @@ const onMapLoaded = () => {
 };
 
 Template.map.onRendered(function () {
+
 	this.autorun(() => {
-    console.log('aurorun');
 		if (Mapbox.loaded()) {
-      console.log('Mapbox.loaded');
 			mapUtils = new MapUtils(Meteor.settings.public.accessToken, Meteor.settings.public.mapId, onMapLoaded);
-      mapUtils.addClick(onMapClick);
+			mapUtils.addClick(onMapClick);
 		}
 	});
 });
