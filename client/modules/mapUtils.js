@@ -2,6 +2,7 @@ export default class MapUtils {
 
   constructor(accessToken, mapId, onLoadedCallback) {
     L.mapbox.accessToken = accessToken;
+    this.pinsForUser = [];
     this.map = L.mapbox.map('map', mapId).on('ready', onLoadedCallback);
   }
 
@@ -9,28 +10,43 @@ export default class MapUtils {
   //@pin: {type: text/image/video, lng:1, lon:1, title:"", text:"", link:""}
   addPin (pin) {
 
+    let pinLayer;
     switch(pin.type) {
       case 'text':
         // TODO should text whether all required properties exist
-        return this.addTextPin(pin.lng, pin.lat, pin.title, pin.text);
+        pinLayer = this.addTextPin(pin.lng, pin.lat, pin.title, pin.text);
+        break;
       case 'image':
         // TODO should text whether all required properties exist
-        return this.addImagePin(pin.lng, pin.lat, pin.title, pin.link, pin.text);
+        pinLayer = this.addImagePin(pin.lng, pin.lat, pin.title, pin.link, pin.text);
+        break;
       case 'video':
         // TODO should text whether all required properties exist
-        return this.addVideoPin(pin.lng, pin.lat, pin.title, pin.link, pin.text);
+        pinLayer = this.addVideoPin(pin.lng, pin.lat, pin.title, pin.link, pin.text);
       default:
-        return this.addSimplePin(pin.lng, pin.lat);
+        pinLayer = this.addSimplePin(pin.lng, pin.lat);
+        break;
     }
+    this.pinsForUser.push(pinLayer);
   }
 
   addPinsForUser (userId, pins) {
+    console.log('addPinsForUser');
+    this.removePinsForUser();
     pins.forEach((pin) => this.addPin(pin));
+  }
+
+  removePinsForUser () {
+    this.pinsForUser.forEach((pin) => this.map.removeLayer(pin));
+    this.pinsForUser = [];
+    // markerLayer.clearLayers();
   }
 
   addClick (callback) {
   	this.map.on('click', (e) => {
       console.log('click this = ', e);
+      // map.fitBounds(e.bounds);
+      // this.addPin({lng: e.latlng.lng, lat: e.latlng.lat});
       callback(e.latlng.lng, e.latlng.lat);
   	});
   }
@@ -64,6 +80,7 @@ export default class MapUtils {
   			'marker-symbol': 'star'
   		}
   	});
+    return simplePinLayer;
   }
 
   // add a pin that contains text only
@@ -90,6 +107,7 @@ export default class MapUtils {
             '<p>' + layer.feature.properties.text + '<\/p>';
         layer.bindPopup(content);
     });
+    return textPinLayer;
   }
 
   // add a pin that contains an image and optionally text
@@ -120,6 +138,7 @@ export default class MapUtils {
       }
       layer.bindPopup(content);
     });
+    return imagePinLayer;
   }
 
   // add a pin that contains an video and optionally text
@@ -150,6 +169,7 @@ export default class MapUtils {
         }
         layer.bindPopup(content);
     });
+    return videoPinLayer;
   }
 
   addFancyPin (e) {
