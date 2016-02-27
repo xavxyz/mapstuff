@@ -23,9 +23,10 @@ const onMapClick = (lng, lat) => {
 				throw new Meteor.Error(400, 'need to fill the media bro');
 			} else {
 				pin.link = $('[rel=link]').val();
-				pin.text = $('[rel=text]').val();
 			}
 		}
+
+		pin.text = $('[rel=text]').val();
 
 		$('[rel=text]').val('');
 		$('[rel=link]').val('');
