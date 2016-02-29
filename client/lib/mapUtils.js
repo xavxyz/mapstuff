@@ -120,7 +120,7 @@ export default class MapUtils {
       },
       properties: {
         'title': title,
-        'marker-color': '#ff8888',
+        'marker-color': '#009933',
         'marker-symbol': 'star',
         'text': text
       }
@@ -147,7 +147,7 @@ export default class MapUtils {
       },
       properties: {
         'title': title,
-        'marker-color': '#ff8888',
+        'marker-color': '#0066cc',
         'marker-symbol': 'art-gallery',
         'image': image,
         'text': text
@@ -155,13 +155,16 @@ export default class MapUtils {
     });
 
     imagePinLayer.eachLayer(function(layer) {
-
+      // TODO here really we should check for the image's width, and set it to 380 only if it's larger otherwise centre it
       var content = '<h2>' + layer.feature.properties.title + '<\/h2>' +
-      '<img src="' + layer.feature.properties.image + '" \/>';
+      '<img src="' + layer.feature.properties.image + '" width="320" \/>';
       if(layer.feature.properties.text) {
         content += '<p>' + layer.feature.properties.text + '<\/p>';
       }
-      layer.bindPopup(content);
+      layer.bindPopup(content, {
+        closeButton: false,
+        minWidth: 340
+      });
     });
     return imagePinLayer;
   }
@@ -183,8 +186,7 @@ export default class MapUtils {
       features: [{
         type: 'Feature',
         properties: {
-          'marker-color': '#f00',
-          'marker-color': '#ff8888',
+          'marker-color': '#cc0000',
           'marker-symbol': 'theatre',
           video: videoHtml,
         },
