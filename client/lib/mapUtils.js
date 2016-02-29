@@ -30,7 +30,7 @@ export default class MapUtils {
 				pinLayer = this.addSimplePin(pin.lng, pin.lat);
 				break;
     }
-    
+
     pinLayer.id = pin._id;
 
     pinLayer.on('click', (e) => {
@@ -43,6 +43,9 @@ export default class MapUtils {
 
     if(!this.pinsForUser[userId]) {
       this.pinsForUser[userId] = [];
+    }
+    else if(this.pinsForUser["default"]) {
+      removePinsForUser("default");
     }
 
     this.pinsForUser[userId].push(pinLayer);
