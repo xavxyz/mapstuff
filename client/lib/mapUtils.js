@@ -2,9 +2,14 @@ export default class MapUtils {
 
   constructor(accessToken, mapId, onLoadedCallback, onPinClick) {
     L.mapbox.accessToken = accessToken;
+
+    const southWest = L.latLng(-84.415, -172.968),
+      northEast = L.latLng(86.679, 187.734),
+      bounds = L.latLngBounds(southWest, northEast);
+
     this.pinsForUser = {};
     this.onPinClick = onPinClick;
-    this.map = L.mapbox.map('map', mapId).on('ready', onLoadedCallback);
+    this.map = L.mapbox.map('map', mapId, {maxBounds: bounds, maxZoom: 19, minZoom: 3}).on('ready', onLoadedCallback);
     L.control.locate().addTo(this.map);
   }
 
