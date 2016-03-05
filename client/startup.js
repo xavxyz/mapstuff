@@ -22,4 +22,17 @@ Meteor.startup(() => {
 			"arc"
     ]
   });
+
+	sAlert.config({
+		effect: 'jelly',
+		position: 'bottom',
+		timeout: 2000,
+		html: false,
+		onRouteClose: true,
+		stack: true,
+		offset: 0,
+		beep: false,
+		onClose: _.noop
+	});
+
 });
