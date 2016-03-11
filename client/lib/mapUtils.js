@@ -9,6 +9,7 @@ export default class MapUtils {
 
     this.pinsForUser = {};
     this.onPinClick = onPinClick;
+
     this.map = L.mapbox.map('map', mapId, {maxBounds: bounds, maxZoom: 19, minZoom: 3}).on('ready', onLoadedCallback);
     L.control.locate().addTo(this.map);
   }
@@ -172,14 +173,22 @@ export default class MapUtils {
   // add a pin that contains an video and optionally text
   addVideoPin(lng, lat, title, video, text) {
     // The GeoJSON representing a point feature with a property of 'video' for the Vimeo iframe
-
     var substringIndex = video.lastIndexOf('/') + 1;
     var vimeoVideoId = video.substring(substringIndex);
     var playerLink = '//player.vimeo.com/video/' + vimeoVideoId;
     var vimeoLink = 'http://vimeo.com/' + vimeoVideoId;
-    var videoHtml = '<iframe src="' + playerLink + '" width="380" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <h2><a href="' + vimeoLink + '">' + title + '<\/a><\/h2>';
-    if(text) {
-      videoHtml += '<p>' + text + '<\/p>';
+
+    let width = 380;
+    let height = 281;
+
+    if (window.screen.availWidth < 380) {
+      width = window.screen.availWidth - 60;
+      height = 281 * width / 380;
+    }
+
+    var videoHtml = `<iframe src="${playerLink}" width="${width}" height="${height}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <h2><a href="${vimeoLink}">${title}<\/a><\/h2>`;
+    if (text) {
+      videoHtml += `<p>${text}<\/p>`;
     }
 
     var geoJson = {
@@ -208,9 +217,9 @@ export default class MapUtils {
       var popupContent =  feature.properties.video;
 
       // bind the popup to the marker http://leafletjs.com/reference.html#popup
-      marker.bindPopup(popupContent,{
+      marker.bindPopup(popupContent, {
         closeButton: false,
-        minWidth: 400
+        minWidth: width + 10
       });
     });
 
