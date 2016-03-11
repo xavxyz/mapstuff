@@ -55,14 +55,14 @@ export default class MapUtils {
       this.onPinClick(e.target.id);
     });
 
-    if(!userId) {
+    if (!userId) {
       userId = "default";
     }
 
-    if(!this.pinsForUser[userId]) {
+    if (!this.pinsForUser[userId]) {
       this.pinsForUser[userId] = [];
     }
-    else if(this.pinsForUser["default"]) {
+    else if (this.pinsForUser["default"]) {
       removePinsForUser("default");
     }
 
@@ -75,7 +75,7 @@ export default class MapUtils {
   }
 
   removePinsForUser (userId) {
-    if(this.pinsForUser[userId]) {
+    if (this.pinsForUser[userId]) {
       this.pinsForUser[userId].forEach((pin) => {console.log('removing pin'); this.map.removeLayer(pin)});
       this.pinsForUser[userId] = [];
     }
@@ -105,7 +105,7 @@ export default class MapUtils {
   }
 
   addSimplePin (lng, lat) {
-    var simplePinLayer = L.mapbox.featureLayer().addTo(this.map);
+    const simplePinLayer = L.mapbox.featureLayer().addTo(this.map);
 
     simplePinLayer.setGeoJSON({
       type: 'Feature',
@@ -118,12 +118,13 @@ export default class MapUtils {
         'marker-symbol': 'star'
       }
     });
+    
     return simplePinLayer;
   }
 
   // add a pin that contains text only
   addTextPin (lng, lat, title, text) {
-    var textPinLayer = L.mapbox.featureLayer().addTo(this.map);
+    const textPinLayer = L.mapbox.featureLayer().addTo(this.map);
 
     textPinLayer.setGeoJSON({
       type: 'Feature',
@@ -140,17 +141,18 @@ export default class MapUtils {
     });
 
     textPinLayer.eachLayer(function(layer) {
-
-      var content = '<h2>' + layer.feature.properties.title + '<\/h2>' +
-        '<p>' + layer.feature.properties.text + '<\/p>';
+      const content = '<h2>' + layer.feature.properties.title + '<\/h2>' +
+                      '<p>' + layer.feature.properties.text + '<\/p>';
+      
       layer.bindPopup(content);
     });
+    
     return textPinLayer;
   }
 
   // add a pin that contains an image and optionally text
   addImagePin (lng, lat, title, image, text) {
-    var imagePinLayer = L.mapbox.featureLayer().addTo(this.map);
+    const imagePinLayer = L.mapbox.featureLayer().addTo(this.map);
 
     imagePinLayer.setGeoJSON({
       type: 'Feature',
@@ -195,7 +197,6 @@ export default class MapUtils {
         closeButton: false,
         minWidth: width + 20
       });
-
     });
 
     return imagePinLayer;
@@ -204,10 +205,10 @@ export default class MapUtils {
   // add a pin that contains an video and optionally text
   addVideoPin(lng, lat, title, video, text) {
     // The GeoJSON representing a point feature with a property of 'video' for the Vimeo iframe
-    var substringIndex = video.lastIndexOf('/') + 1;
-    var vimeoVideoId = video.substring(substringIndex);
-    var playerLink = '//player.vimeo.com/video/' + vimeoVideoId;
-    var vimeoLink = 'http://vimeo.com/' + vimeoVideoId;
+    const substringIndex = video.lastIndexOf('/') + 1;
+    const vimeoVideoId = video.substring(substringIndex);
+    const playerLink = '//player.vimeo.com/video/' + vimeoVideoId;
+    const vimeoLink = 'http://vimeo.com/' + vimeoVideoId;
 
     let width = 380;
     let height = 281;
@@ -217,12 +218,12 @@ export default class MapUtils {
       height = 281 * width / 380;
     }
 
-    var videoHtml = `<iframe src="${playerLink}" width="${width}" height="${height}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <h2><a href="${vimeoLink}">${title}</a></h2>`;
+    let videoHtml = `<iframe src="${playerLink}" width="${width}" height="${height}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <h2><a href="${vimeoLink}">${title}</a></h2>`;
     if (text) {
       videoHtml += `<p>${text}</p>`;
     }
 
-    var geoJson = {
+    const geoJson = {
       features: [{
         type: 'Feature',
         properties: {
@@ -237,15 +238,15 @@ export default class MapUtils {
       }]
     };
 
-    var videoPinLayer = L.mapbox.featureLayer().addTo(this.map);
+    const videoPinLayer = L.mapbox.featureLayer().addTo(this.map);
 
     // Add the iframe in a marker tooltip using the custom feature properties
     videoPinLayer.on('layeradd', function(e) {
-      var marker = e.layer,
+      const marker = e.layer,
         feature = marker.feature;
 
       // Create custom popup content from the GeoJSON property 'video'
-      var popupContent =  feature.properties.video;
+      const popupContent =  feature.properties.video;
 
       // bind the popup to the marker http://leafletjs.com/reference.html#popup
       marker.bindPopup(popupContent, {
@@ -261,7 +262,7 @@ export default class MapUtils {
 
   addFancyPin (e) {
 
-    var featureLayer = L.mapbox.featureLayer().addTo(this.map);
+    const featureLayer = L.mapbox.featureLayer().addTo(this.map);
 
     featureLayer.setGeoJSON({
       type: 'Feature',
@@ -281,7 +282,7 @@ export default class MapUtils {
 
     featureLayer.eachLayer(function(layer) {
 
-      var content = '<h2>A ferry ride!<\/h2>' +
+      const content = '<h2>A ferry ride!<\/h2>' +
         '<img src="' + layer.feature.properties.image + '" \/>' +
         '<p>From: ' + layer.feature.properties.from + '<br \/>' +
         'to: ' + layer.feature.properties.to + '<\/p>';
