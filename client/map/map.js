@@ -1,6 +1,6 @@
 import Pins from '../../lib/collections';
-import MapUtils from '../lib/mapUtils';
-import pinType from '../lib/pinType';
+import MapUtils from '../lib/map-utils';
+import pinType from '../lib/pin-type';
 
 let mapUtils;
 
