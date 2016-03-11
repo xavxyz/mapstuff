@@ -1,46 +1,58 @@
+import smallScreen from './mobile-display';
+
 export default class MapUtils {
 
   constructor(accessToken, mapId, onLoadedCallback, onPinClick) {
     L.mapbox.accessToken = accessToken;
 
-    const southWest = L.latLng(-84.415, -172.968),
-      northEast = L.latLng(86.679, 187.734),
-      bounds = L.latLngBounds(southWest, northEast);
-
     this.pinsForUser = {};
     this.onPinClick = onPinClick;
 
-    this.map = L.mapbox.map('map', mapId, {maxBounds: bounds, maxZoom: 19, minZoom: 3}).on('ready', onLoadedCallback);
+    // define defaults corner bottom-left and corner top-right to center the map (whole world view)
+    const southWest = L.latLng(-84.415, -172.968),
+      northEast = L.latLng(86.679, 187.734);
+
+    let options = {
+      maxBounds: L.latLngBounds(southWest, northEast),
+      maxZoom: 19,
+      minZoom: 3
+    };
+
+    if (smallScreen()) {
+      options.zoomControl = false
+    }
+
+    this.map = L.mapbox.map('map', mapId, options).on('ready', onLoadedCallback);
     L.control.locate().addTo(this.map);
   }
 
   // add a pin
   //@pin: {type: text/image/video, lng:1, lat:1, title:"", text:"", link:""}
   addPin (pin, userId) {
-		let pinLayer;
+    let pinLayer;
 
     switch(pin.type) {
       case 'text':
-				// TODO should text whether all required properties exist
-				pinLayer = this.addTextPin(pin.lng, pin.lat, pin.title, pin.text);
-      	break;
+        // TODO should text whether all required properties exist
+        pinLayer = this.addTextPin(pin.lng, pin.lat, pin.title, pin.text);
+        break;
       case 'image':
-				// TODO should text whether all required properties exist
-				pinLayer = this.addImagePin(pin.lng, pin.lat, pin.title, pin.link, pin.text);
-				break;
+        // TODO should text whether all required properties exist
+        pinLayer = this.addImagePin(pin.lng, pin.lat, pin.title, pin.link, pin.text);
+        break;
       case 'video':
-				// TODO should text whether all required properties exist
-				pinLayer = this.addVideoPin(pin.lng, pin.lat, pin.title, pin.link, pin.text);
-				break;
+        // TODO should text whether all required properties exist
+        pinLayer = this.addVideoPin(pin.lng, pin.lat, pin.title, pin.link, pin.text);
+        break;
       default:
-				pinLayer = this.addSimplePin(pin.lng, pin.lat);
-				break;
+        pinLayer = this.addSimplePin(pin.lng, pin.lat);
+        break;
     }
 
     pinLayer.id = pin._id;
 
     pinLayer.on('click', (e) => {
-        this.onPinClick(e.target.id);
+      this.onPinClick(e.target.id);
     });
 
     if(!userId) {
@@ -72,7 +84,7 @@ export default class MapUtils {
 
   addClick (callback) {
     this.map.on('click', (e) => {
-			// map.fitBounds(e.bounds);
+      // map.fitBounds(e.bounds);
       // this.addPin({lng: e.latlng.lng, lat: e.latlng.lat});
       callback(e.latlng.lng, e.latlng.lat);
     });
@@ -130,7 +142,7 @@ export default class MapUtils {
     textPinLayer.eachLayer(function(layer) {
 
       var content = '<h2>' + layer.feature.properties.title + '<\/h2>' +
-      '<p>' + layer.feature.properties.text + '<\/p>';
+        '<p>' + layer.feature.properties.text + '<\/p>';
       layer.bindPopup(content);
     });
     return textPinLayer;
@@ -155,18 +167,37 @@ export default class MapUtils {
       }
     });
 
-    imagePinLayer.eachLayer(function(layer) {
-      // TODO here really we should check for the image's width, and set it to 380 only if it's larger otherwise centre it
-      var content = '<h2>' + layer.feature.properties.title + '<\/h2>' +
-      '<img src="' + layer.feature.properties.image + '" width="320" \/>';
-      if(layer.feature.properties.text) {
-        content += '<p>' + layer.feature.properties.text + '<\/p>';
+    imagePinLayer.eachLayer((layer) => {
+      let width = 380;
+      if (smallScreen()) {
+        width = window.screen.availWidth - 40; // equal margin on both sides
       }
+
+      /*
+       // pure js way to determine image size, if someone knows a better way -> PR please :)
+       const img = new Image();
+       img.src = layer.feature.properties.image;
+       img.onload = function () {
+       if (this.width < width) {
+       width = this.witdh;
+       }
+       };
+       */
+
+      let content = `<h2>${layer.feature.properties.title}</h2>
+                     <img src="${layer.feature.properties.image}" width="${width}" style='display: block; margin-left: auto; margin-right: auto;' />`;
+
+      if (layer.feature.properties.text) {
+        content += `<p>${layer.feature.properties.text}</p>`;
+      }
+
       layer.bindPopup(content, {
         closeButton: false,
-        minWidth: 340
+        minWidth: width + 20
       });
+
     });
+
     return imagePinLayer;
   }
 
@@ -181,14 +212,14 @@ export default class MapUtils {
     let width = 380;
     let height = 281;
 
-    if (window.screen.availWidth < 380) {
-      width = window.screen.availWidth - 60;
+    if (smallScreen()) {
+      width = window.screen.availWidth - 40; // equal margins on both side
       height = 281 * width / 380;
     }
 
-    var videoHtml = `<iframe src="${playerLink}" width="${width}" height="${height}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <h2><a href="${vimeoLink}">${title}<\/a><\/h2>`;
+    var videoHtml = `<iframe src="${playerLink}" width="${width}" height="${height}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <h2><a href="${vimeoLink}">${title}</a></h2>`;
     if (text) {
-      videoHtml += `<p>${text}<\/p>`;
+      videoHtml += `<p>${text}</p>`;
     }
 
     var geoJson = {
@@ -211,7 +242,7 @@ export default class MapUtils {
     // Add the iframe in a marker tooltip using the custom feature properties
     videoPinLayer.on('layeradd', function(e) {
       var marker = e.layer,
-      feature = marker.feature;
+        feature = marker.feature;
 
       // Create custom popup content from the GeoJSON property 'video'
       var popupContent =  feature.properties.video;
@@ -219,7 +250,7 @@ export default class MapUtils {
       // bind the popup to the marker http://leafletjs.com/reference.html#popup
       marker.bindPopup(popupContent, {
         closeButton: false,
-        minWidth: width + 10
+        minWidth: width + 20
       });
     });
 
@@ -251,9 +282,9 @@ export default class MapUtils {
     featureLayer.eachLayer(function(layer) {
 
       var content = '<h2>A ferry ride!<\/h2>' +
-      '<img src="' + layer.feature.properties.image + '" \/>' +
-      '<p>From: ' + layer.feature.properties.from + '<br \/>' +
-      'to: ' + layer.feature.properties.to + '<\/p>';
+        '<img src="' + layer.feature.properties.image + '" \/>' +
+        '<p>From: ' + layer.feature.properties.from + '<br \/>' +
+        'to: ' + layer.feature.properties.to + '<\/p>';
       layer.bindPopup(content);
     });
   }
