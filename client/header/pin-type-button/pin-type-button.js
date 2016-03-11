@@ -1,4 +1,4 @@
-import pinType from '../../lib/pinType'
+import pinType from '../../lib/pin-type'
 
 Template.pinTypeButton.helpers({
   pinType () {
