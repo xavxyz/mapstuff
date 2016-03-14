@@ -19,8 +19,9 @@
 							{{> pinTypeButton type}}
 						{{/each}}
 					</ul>
-					<form class="navbar-form navbar-left" role="search">
+					<form class="navbar-form navbar-left" role="create-pin">
 						<div class="form-group">
+							<input id="textInput" rel="title" type="text" class="form-control" placeholder="Title" />
 							<input id="textInput" rel="text" type="text" class="form-control" placeholder="Text" />
 							{{#if (or (pinType 'video') (pinType 'image'))}}
 								<input id="linkInput" rel="link" type="text" class="form-control" placeholder="Link" />

@@ -10,12 +10,11 @@ const onMapClick = (lng, lat) => {
 			lng,
 			lat,
 			type: pinType.get(),
-			title: 'Pinned stuff',
 			userId: Meteor.userId()
 		};
 
-		if ($('[rel=text]').val() === '') {
-			sAlert.error('You need to fill at least the text field to place this text pin!');
+		if ($('[rel=title]').val() === '') {
+			sAlert.error('You need to fill at least the title field to place this text pin!');
 			throw new Meteor.Error(400, 'need to fill the fields bro');
 		}
 
@@ -28,8 +27,10 @@ const onMapClick = (lng, lat) => {
 			}
 		}
 
+		pin.title = $('[rel=title]').val();
 		pin.text = $('[rel=text]').val();
 
+		$('[rel=title]').val('');
 		$('[rel=text]').val('');
 		$('[rel=link]').val('');
 
