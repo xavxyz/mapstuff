@@ -1,4 +1,4 @@
-import Pins from '../../lib/collections';
+import Pins from '/imports/api/pins/collection';
 import MapUtils from '../lib/map-utils';
 import pinType from '../lib/pin-type';
 

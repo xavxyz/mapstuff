@@ -1,4 +1,9 @@
-export default pinSchema = new SimpleSchema({
+import { Mongo } from 'meteor/mongo';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+
+const Pins = new Mongo.Collection('pins');
+
+export const pinSchema = new SimpleSchema({
 	lng: {
 		type: Number,
 		decimal: true
@@ -27,3 +32,7 @@ export default pinSchema = new SimpleSchema({
 		type: String
 	}
 });
+
+Pins.attachSchema(pinSchema);
+
+export default Pins;
