@@ -1,0 +1,6 @@
+{
+  "public": {
+    "accessToken": "YOUR_TOKEN",
+    "style": "mapbox://styles/mapbox/basic-v8"
+  }
+}
