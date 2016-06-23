@@ -8,7 +8,7 @@ Once you have one, create a `settings.json` file and add the following :
 {
   "public": {
     "accessToken": "YOUR_TOKEN",
-    "mapId": "YOUR_MAP"
+    "style": "mapbox://styles/mapbox/basic-v8"
   }
 }
 ```

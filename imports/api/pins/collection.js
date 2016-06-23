@@ -1,38 +1,24 @@
-import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { Swell } from 'meteor/mongo';
 
-const Pins = new Mongo.Collection('pins');
+const Swell = new Mongo.Collection('swell');
 
-export const pinSchema = new SimpleSchema({
-	lng: {
-		type: Number,
-		decimal: true
-	},
-	lat: {
-		type: Number,
-		decimal: true
-	},
-	type: {
-		type: String,
-		defaultValue: 'text'
-	},
-	title: {
-		type: String,
-		optional: true
-	},
-	text: {
-		type: String,
-		optional: true
-	},
-	link: {
-		type: String,
-		optional: true
-	},
-	userId: {
-		type: String
-	}
+// example of a schema's definition
+const schema = new SimpleSchema({
+  temperature: {
+    type: String
+  },
+  swell: {
+    type: String
+  },
+  windDirection: {
+    type: String
+  },
+  period: {
+    type: String
+  },
+  hour: {
+    type: Date
+  },
 });
 
-Pins.attachSchema(pinSchema);
-
-export default Pins;
+export default Swell;
