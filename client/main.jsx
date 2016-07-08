@@ -1,6 +1,9 @@
-import React from "react";
-import { mount } from "react-mounter";
+import React from 'react';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 
-import Layout from '../imports/ui/layout/Layout.jsx';
+import store from '../imports/api/store.js';
 
-mount(Layout, {});
+import App from '../imports/ui/containers/App.js';
+
+render(<Provider store={ store }><App /></Provider>, document.getElementById('root'));

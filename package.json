@@ -11,6 +11,8 @@
     "react-dom": "^15.0.2",
     "react-mapbox-gl": "^0.2.2",
     "react-motion": "^0.4.3",
-    "react-mounter": "^1.2.0"
+    "react-mounter": "^1.2.0",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2"
   }
 }

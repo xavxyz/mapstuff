@@ -10,11 +10,11 @@ mongo                   # The database Meteor supports right now
 session                 # Client-side reactive dictionary for your app
 jquery                  # Helpful client-side library
 tracker                 # Meteor's client-side reactive programming library
-
 standard-minifier-js    # JS minifier run for production mode
 es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
+static-html
 fourseven:scss
 seba:minifiers-autoprefixer
 aldeed:simple-schema
@@ -25,4 +25,3 @@ dburles:collection-helpers
 twbs:bootstrap
 accounts-password
 reactive-var
-kadira:dochead
