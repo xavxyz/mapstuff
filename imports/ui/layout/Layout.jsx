@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import { DocHead } from 'meteor/kadira:dochead';
 
-import Header from '../components/Header/Header.jsx';
-import MapWrapper from "/imports/ui/components/MapWrapper/MapWrapper.jsx";
+import Header from '../components/Header.jsx';
+import MapWrapper from "../components/MapWrapper.jsx";
 
 class Layout extends React.Component {
   render() {

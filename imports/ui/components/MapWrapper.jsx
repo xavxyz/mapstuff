@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import ReactMapboxGl, { Layer, Feature, Popup, ZoomControl } from "react-mapbox-gl";
 
-import './MapWrapper.scss';
-
-const { accessToken, style } = {
-  "accessToken": "pk.eyJ1IjoiZmFicmljOCIsImEiOiJjaWc5aTV1ZzUwMDJwdzJrb2w0dXRmc2d0In0.p6GGlfyV-WksaDV_KdN27A",
-  "style": "mapbox://styles/mapbox/basic-v8"
-};
+const { accessToken, style } = Meteor.settings.public.mapbox;
 
 const containerStyle = {
   height: "100vh",
