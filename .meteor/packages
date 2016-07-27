@@ -25,3 +25,8 @@ dburles:collection-helpers
 twbs:bootstrap
 accounts-password
 reactive-var
+
+std:accounts-ui
+std:accounts-basic
+react-meteor-data
+apollo

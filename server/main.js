@@ -1,5 +1,10 @@
-import { Meteor } from 'meteor/meteor';
+import { createApolloServer } from 'meteor/apollo';
 
-Meteor.startup(() => {
-  // code to run on server at startup
+import { schema, resolvers } from '../imports/api/schema';
+
+createApolloServer({
+  graphiql: true,
+  pretty: true,
+  schema,
+  resolvers,
 });
