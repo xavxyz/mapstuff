@@ -2,7 +2,32 @@
   "name": "mapstuff",
   "private": true,
   "scripts": {
-    "start": "meteor run"
+    "start": "meteor --settings settings.json",
+    "lint": "eslint .",
+    "pretest": "npm run lint --silent"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "allowImportExportEverywhere": true
+    },
+    "plugins": [
+      "meteor"
+    ],
+    "extends": [
+      "airbnb",
+      "plugin:meteor/recommended"
+    ],
+    "settings": {
+      "import/resolver": "meteor"
+    },
+    "rules": {
+      "no-console": 0,
+      "no-unused-vars": 1,
+      "eol-last": 0,
+      "import/prefer-default-export": 0,
+      "import/no-extraneous-dependencies": "off"
+    }
   },
   "dependencies": {
     "apollo-client": "^0.3.29",
@@ -23,5 +48,15 @@
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
     "tracker-component": "^1.3.16"
+  },
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "eslint": "^3.2.2",
+    "eslint-config-airbnb": "^10.0.0",
+    "eslint-import-resolver-meteor": "^0.3.1",
+    "eslint-plugin-import": "^1.12.0",
+    "eslint-plugin-jsx-a11y": "^2.0.1",
+    "eslint-plugin-meteor": "^4.0.0",
+    "eslint-plugin-react": "^6.0.0"
   }
 }
