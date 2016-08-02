@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 
 const pins = (state = [], action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'ADD_PIN':
       return [...state, action.pin];
-    default: 
+    default:
       return state;
   }
 };

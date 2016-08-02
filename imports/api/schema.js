@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Random } from 'meteor/random';
 
 export const schema = [`
@@ -28,7 +29,7 @@ export const resolvers = {
     },
   },
   User: {
-    emails: ({emails}) => emails,
+    emails: ({ emails }) => emails,
     randomString: () => Random.id(),
-  }
-}
+  },
+};

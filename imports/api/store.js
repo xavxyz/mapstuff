@@ -2,12 +2,12 @@ import { createStore, compose } from 'redux';
 
 import rootReducer from './reducers/root.js';
 
-const defaultState = { 
-  mapbox: { 
+const defaultState = {
+  mapbox: {
     pins: [
-      {lng: -71.9803719, lat: -13.516491}
-    ]
-  } 
+      { lng: -71.9803719, lat: -13.516491 },
+    ],
+  },
 };
 
 const enhancers = compose(

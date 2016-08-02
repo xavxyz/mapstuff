@@ -6,7 +6,7 @@ import { Accounts } from 'meteor/std:accounts-ui';
 import gql from 'graphql-tag';
 
 Accounts.ui.config({
-  passwordSignupFields: 'USERNAME_ONLY'
+  passwordSignupFields: 'USERNAME_ONLY',
 });
 
 const App = ({ userId, currentUser }) => {
@@ -20,8 +20,8 @@ const App = ({ userId, currentUser }) => {
         </div>
       ) : 'Please log in!' }
     </div>
-  )
-}
+  );
+};
 
 // This container brings in Apollo GraphQL data
 const AppWithData = connect({
