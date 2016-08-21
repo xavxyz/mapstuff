@@ -5,6 +5,7 @@ import Layout from '../layout/Layout.jsx';
 
 const mapStateToProps = (state) => ({
   mapbox: state.mapbox,
+  overlay: state.overlay,
 });
 
 const mapDispachToProps = (dispatch) => bindActionCreators(actionCreators, dispatch);

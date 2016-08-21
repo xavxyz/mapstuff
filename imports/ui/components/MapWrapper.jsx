@@ -11,14 +11,13 @@ const containerStyle = {
 
 const MapWrapper = (props) => {
   const { pins } = props.mapbox;
-  const worldCenter = [pins[0].lng, pins[0].lat];
   return (
     <ReactMapboxGl
       style={ style }
-      center={ worldCenter }
+      center={ props.mapbox.center }
       zoom={ 6 }
       accessToken={ accessToken }
-      onClick={ (map, event) => props.addPin(event.lngLat) }
+      onClick={(map, event) => { props.hideMedia(); props.setCenter(event.lngLat) }}
       containerStyle={ containerStyle }
     >
       <Layer
@@ -31,6 +30,7 @@ const MapWrapper = (props) => {
                 // basic key
                 key={ pin.lng + pin.lat }
                 coordinates={ [pin.lng, pin.lat] }
+                onClick={() => props.displayMedia(pin.image)}
               />
             ))
           }

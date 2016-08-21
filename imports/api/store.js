@@ -4,10 +4,13 @@ import rootReducer from './reducers/root.js';
 
 const defaultState = {
   mapbox: {
-    pins: [
-      { lng: -71.9803719, lat: -13.516491 },
-    ],
+    pins: [],
+    center: [-71.9803719, -13.516491],
   },
+  overlay: {
+    show: false,
+    media: null,
+  }
 };
 
 const enhancers = compose(
